@@ -12,10 +12,10 @@ export class UserEntity extends BaseEntity {
     email: string;
 
     @Column({ nullable: true })
-    firstName: string;
+    name: string;
 
     @Column({ nullable: true })
-    lastName: string;
+    surname: string;
 
     @Column({ select: false, nullable: true })
     password: string;
@@ -24,7 +24,7 @@ export class UserEntity extends BaseEntity {
     // role: UserRoleEnum;
 
     @Column({ default: 'en', transformer: new LowerTransformer(), length: 10 })
-    language: string;
+    language?: string;
 
     // @Column()
     // status: UserStatusEnum;
@@ -34,11 +34,12 @@ export class UserEntity extends BaseEntity {
         nullable: true,
         transformer: new TimestampTransformer()
     })
-    lastLoginAt: Date;
+    lastLoginAt?: Date;
 
     @DeleteDateColumn({
         type: 'timestamp',
+        nullable: true,
         transformer: new TimestampTransformer()
     })
-    deletedAt: Date;
+    deletedAt?: Date;
 }

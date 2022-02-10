@@ -1,7 +1,8 @@
+import { ConnectionOptions } from 'typeorm';
 import { env } from './env.config'
 
 let isTest = process.env.NODE_ENV === 'test';
-const config = {
+const config: ConnectionOptions = {
     type: env.DATABASE.CONNECT,
     host: env.DATABASE.HOST,
     port: env.DATABASE.PORT,
@@ -15,6 +16,6 @@ const config = {
         // configure creation migration
         migrationsDir: `${env.ROOT_PATH}/migrations`
     }
-} as any
+} as any;
 
-export = config
+export = config;

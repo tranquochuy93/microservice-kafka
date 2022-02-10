@@ -1,3 +1,7 @@
+// import dotenv from 'dotenv';
+// dotenv.config({ path: '.env' });
+
+require('dotenv').config({ path: '.env' });
 
 let isTest = process.env.NODE_ENV === 'test';
 export const env = {
@@ -10,4 +14,8 @@ export const env = {
         NAME: process.env.DATABASE_NAME,
     },
     ROOT_PATH: process.cwd() + (isTest ? '/src' : ''),
-}
+    JWT: {
+        SECRET: process.env.JWT_SECRET,
+        EXPIRE: process.env.JWT_EXPIRE || '7d',
+    }
+};

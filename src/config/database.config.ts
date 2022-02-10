@@ -1,4 +1,4 @@
-import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import config from "./orm.config";
 
-export const databaseConfig = ConfigModule.forRoot(config)
+export const databaseConfig = TypeOrmModule.forRoot(config);
