@@ -22,7 +22,8 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/config/orm.config.ts",
-    "migration": "npm run typeorm -- migration:run"
+    "migration": "npm run typeorm -- migration:run",
+    "copy:assets": "ts-node src/copy-asset.ts"
   },
   "dependencies": {
     "@hodfords/typeorm-helper": "0.0.14",
@@ -41,8 +42,9 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "cookie-parser": "^1.4.6",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "nestjs-i18n": "^8.2.2",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
