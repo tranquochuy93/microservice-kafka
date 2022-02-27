@@ -5,16 +5,19 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { databaseConfig } from '~config/database.config';
 import { ReportMicroserviceModule } from '~microservice/microservice.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
+import { i18nConfig } from '~config/i18n.config';
 
 @Module({
   imports: [
     databaseConfig,
-
+    i18nConfig,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     ReportMicroserviceModule,
     AuthModule,
-    UserModule
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

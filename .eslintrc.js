@@ -25,14 +25,14 @@ module.exports = {
     'curly': 'error',
     'no-plusplus': ['warn', { 'allowForLoopAfterthoughts': true }],
     'no-magic-numbers': 'off',
-    '@typescript-eslint/no-magic-numbers': ['warn', {
-      'ignore': [-1, 0, 1],
-      'ignoreArrayIndexes': true,
-      'ignoreEnums': true,
-      'ignoreReadonlyClassProperties': true,
-      'ignoreNumericLiteralTypes': true
-    }],
-    'import/no-duplicates': 'error',
+    // '@typescript-eslint/no-magic-numbers': ['warn', {
+    //   'ignore': [-1, 0, 1],
+    //   'ignoreArrayIndexes': true,
+    //   'ignoreEnums': true,
+    //   'ignoreReadonlyClassProperties': true,
+    //   'ignoreNumericLiteralTypes': true
+    // }],
+    // 'import/no-duplicates': 'error',
     'max-len': ['warn', { 'code': 120, 'tabWidth': 2 }],
     'max-params': ['warn', 7],
     'max-lines': ["error", { 'max': 750, 'skipComments': true, 'skipBlankLines': false }],

@@ -1,26 +1,22 @@
-import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config'
-import { KafkaOptions, Transport } from '@nestjs/microservices'
-import { AppModule } from './app.module';
+import { env } from '~config/env.config'; // Should be on top
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+env.ROOT_PATH = __dirname;
 
-  const configService = app.get(ConfigService)
-  await app.connectMicroservice<KafkaOptions>({
-    transport: Transport.KAFKA,
-    options: {
-      client: {
-        clientId: 'ESG_MAIN',
-        brokers: [configService.get<string>('KAFKA_URL', '')],
-      },
-      consumer: {
-        groupId: 'ESG_MAIN',
-      },
-    },
-  })
+import { Bootstrap } from '~core/bootstraps/bootstraps';
 
-  await app.startAllMicroservices()
+async function startApp() {
+  const bootstrap = new Bootstrap();
+  await bootstrap.initApp();
+  bootstrap.initPipes();
+  // bootstrap.initCors();
+  // bootstrap.buildSwagger();
+  // bootstrap.initStaticAsset();
+  // bootstrap.initJsonBodyLimit();
+  bootstrap.initMicroservice();
+  await bootstrap.start();
+  // await bootstrap.enableHotReload();
 }
-bootstrap();
+
+startApp()
+  .then(() => console.log('Init app success'))
+  .catch(console.error);

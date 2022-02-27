@@ -12,9 +12,15 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "esModuleInterop": true, // Some modules seem to have no default exports
     // "skipLibCheck": true,
+    // "resolveJsonModule": true,
     "paths": {
       "~*": ["src/*"]
     }
+    // "typeRoots": ["./node_modules/@types", "./@types"]
   }
+  // "ts-node": {
+  //     "files": true
+  // }
 }
