@@ -9,7 +9,7 @@ export class AuthController {
 
   @Post('signin')
   async signIn(@Body() signInDto: SignInDto) {
-    await this.authService.signIn(signInDto);
+    return this.authService.signIn(signInDto);
   }
 
   @Post('signup')

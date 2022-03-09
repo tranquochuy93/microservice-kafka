@@ -5,6 +5,7 @@ import { KafkaOptions, Transport } from '@nestjs/microservices';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from '~app.module';
 import { env } from '~config/env.config';
+import { ValidateException } from '~core/exceptions/validate.exception';
 
 export class Bootstrap {
   private app: NestExpressApplication;
@@ -14,7 +15,13 @@ export class Bootstrap {
   }
 
   initPipes() {
-    this.app.useGlobalPipes(new ValidationPipe());
+    this.app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        stopAtFirstError: true,
+        exceptionFactory: (errors) => new ValidateException(errors),
+      }),
+    );
   }
 
   initMicroservice() {
