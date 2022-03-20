@@ -1,6 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  CACHE_MANAGER,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
+import { Cache } from 'cache-manager';
+import moment from 'moment';
 import { SignInDto } from '~auth/http/dto/signin.dto';
 import { SignUpDto } from '~auth/http/dto/signup.dto';
 import { env } from '~config/env.config';
@@ -13,6 +20,7 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async signIn(signInDto: SignInDto) {
@@ -58,5 +66,12 @@ export class AuthService {
       ...signUpDto,
       password: hashedPassword,
     });
+  }
+
+  async logout(token: string) {
+    const expiredAt = (this.jwtService.decode(token) as any).exp;
+    const blackListTtl = expiredAt - moment().unix();
+
+    await this.cacheManager.set(token, 1, { ttl: blackListTtl });
   }
 }

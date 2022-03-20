@@ -22,6 +22,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const token = ExtractJwt.fromAuthHeaderAsBearerToken()(
       context.switchToHttp().getRequest(),
     );
+
     return !(await this.cacheManager.get(token));
   }
 }

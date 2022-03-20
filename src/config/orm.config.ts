@@ -23,5 +23,4 @@ const config: ConnectionOptions = {
   },
 } as any;
 
-console.log(config);
 export default config;
