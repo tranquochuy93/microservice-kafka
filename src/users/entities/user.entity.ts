@@ -7,39 +7,39 @@ import { TimestampTransformer } from '~core/transformers/timestamp.transformer';
 
 @Entity('User')
 export class UserEntity extends BaseEntity {
-    @Index()
-    @Column({ transformer: new LowerTransformer() })
-    email: string;
+  @Index()
+  @Column({ transformer: new LowerTransformer() })
+  email: string;
 
-    @Column({ nullable: true })
-    name: string;
+  @Column({ nullable: true })
+  firstName: string;
 
-    @Column({ nullable: true })
-    surname: string;
+  @Column({ nullable: true })
+  lastName: string;
 
-    @Column({ select: false, nullable: true })
-    password: string;
+  @Column({ nullable: true })
+  password: string;
 
-    // @Column()
-    // role: UserRoleEnum;
+  // @Column()
+  // role: UserRoleEnum;
 
-    @Column({ default: 'en', transformer: new LowerTransformer(), length: 10 })
-    language?: string;
+  @Column({ default: 'en', transformer: new LowerTransformer(), length: 10 })
+  language?: string;
 
-    // @Column()
-    // status: UserStatusEnum;
+  // @Column()
+  // status: UserStatusEnum;
 
-    @Column({
-        type: 'timestamp',
-        nullable: true,
-        transformer: new TimestampTransformer()
-    })
-    lastLoginAt?: Date;
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+    transformer: new TimestampTransformer(),
+  })
+  lastLoginAt?: Date;
 
-    @DeleteDateColumn({
-        type: 'timestamp',
-        nullable: true,
-        transformer: new TimestampTransformer()
-    })
-    deletedAt?: Date;
+  @DeleteDateColumn({
+    type: 'timestamp',
+    nullable: true,
+    transformer: new TimestampTransformer(),
+  })
+  deletedAt?: Date;
 }
