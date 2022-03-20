@@ -18,7 +18,6 @@ export class AuthService {
   async signIn(signInDto: SignInDto) {
     const { email, password: inputtedPassword } = signInDto;
     const user = await this.userService.findByEmailNotFail(email);
-
     if (!user) {
       throw new BadRequestException({ translate: 'error.incorrect_email' });
     }
@@ -40,6 +39,8 @@ export class AuthService {
     return {
       ...responseUser,
       token: accessToken,
+      expiredAt: (this.jwtService.decode(accessToken) as any).exp,
+      // refreshTokenExpiredAt: (this.jwtService.decode())
     };
   }
 

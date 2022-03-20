@@ -3,7 +3,7 @@ import { isString } from '@nestjs/common/utils/shared.utils';
 
 export class ValidateException extends Error {
   public statusCode: number;
-  public response: string | Record<string, unknown>;
+  public response: any;
 
   constructor(errors: ValidationError[]) {
     super();

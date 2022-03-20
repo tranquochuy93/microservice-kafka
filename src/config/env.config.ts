@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+
 dotenv.config({ path: '.env' });
 
 // require('dotenv').config({ path: '.env' });
@@ -19,4 +20,8 @@ export const env = {
     EXPIRE: process.env.JWT_EXPIRE || '7d',
   },
   APP_PORT: process.env.APP_PORT,
+  REDIS: {
+    HOST: process.env.REDIS_HOST,
+    PORT: process.env.REDIS_PORT,
+  },
 };

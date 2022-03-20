@@ -5,21 +5,24 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { I18nService } from 'nestjs-i18n';
 import { EntityNotFoundError } from 'typeorm';
 import { ValidateException } from '../exceptions/validate.exception';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
+  constructor(private readonly i18n: I18nService) {}
+
   protected responseError(
     host: ArgumentsHost,
     code: number,
     message: string,
-    errors: string | Record<string, unknown> | null = null,
+    errors?: any,
   ) {
     const ctx = host.switchToHttp();
     ctx.getResponse().status(code).json({
-      message: message,
-      errors: errors,
+      message,
+      errors,
     });
   }
 
@@ -60,13 +63,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
     );
   }
 
-  catchHttpException(exception: HttpException, host: ArgumentsHost) {
-    return this.responseError(
-      host,
-      exception.getStatus(),
-      exception.message,
-      exception.getResponse(),
-    );
+  async catchHttpException(exception: any, host: ArgumentsHost) {
+    const response = exception.getResponse();
+    let message = exception.message;
+
+    if (response.translate) {
+      message = await this.i18n.t(response.translate);
+    }
+
+    return this.responseError(host, exception.getStatus(), message, response);
   }
 
   catchEntityNotFound(exception: EntityNotFoundError, host: ArgumentsHost) {
