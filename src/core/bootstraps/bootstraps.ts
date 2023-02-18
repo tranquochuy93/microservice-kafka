@@ -8,41 +8,41 @@ import { env } from '~config/env.config';
 import { ValidateException } from '~core/exceptions/validate.exception';
 
 export class Bootstrap {
-  private app: NestExpressApplication;
+    private app: NestExpressApplication;
 
-  async initApp() {
-    this.app = await NestFactory.create<NestExpressApplication>(AppModule);
-  }
+    async initApp() {
+        this.app = await NestFactory.create<NestExpressApplication>(AppModule);
+    }
 
-  initPipes() {
-    this.app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        stopAtFirstError: true,
-        exceptionFactory: (errors) => new ValidateException(errors),
-      }),
-    );
-  }
+    initPipes() {
+        this.app.useGlobalPipes(
+            new ValidationPipe({
+                whitelist: true,
+                stopAtFirstError: true,
+                exceptionFactory: (errors) => new ValidateException(errors)
+            })
+        );
+    }
 
-  initMicroservice() {
-    const configService = this.app.get(ConfigService);
-    this.app.connectMicroservice<KafkaOptions>({
-      transport: Transport.KAFKA,
-      options: {
-        client: {
-          clientId: 'ESG_MAIN',
-          brokers: [configService.get<string>('KAFKA_URL', '')],
-        },
-        consumer: {
-          groupId: 'ESG_MAIN',
-        },
-      },
-    });
-  }
+    initMicroservice() {
+        const configService = this.app.get(ConfigService);
+        this.app.connectMicroservice<KafkaOptions>({
+            transport: Transport.KAFKA,
+            options: {
+                client: {
+                    clientId: 'TEST',
+                    brokers: [configService.get<string>('KAFKA_URL', '')]
+                },
+                consumer: {
+                    groupId: 'TEST'
+                }
+            }
+        });
+    }
 
-  async start() {
-    this.app.set('trust proxy', true);
-    await this.app.startAllMicroservices();
-    await this.app.listen(env.APP_PORT);
-  }
+    async start() {
+        this.app.set('trust proxy', true);
+        await this.app.startAllMicroservices();
+        await this.app.listen(env.APP_PORT);
+    }
 }

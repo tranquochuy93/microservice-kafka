@@ -1,0 +1,1 @@
+export const MICROSERVICE_TIMEOUT = 5 * 60 * 1000;

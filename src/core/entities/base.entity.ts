@@ -1,8 +1,7 @@
 import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { TimestampTransformer } from '../transformers/timestamp.transformer';
-import { BaseEntity as AbstractEntity } from '@hodfords/typeorm-helper';
 
-export abstract class BaseEntity extends AbstractEntity {
+export abstract class BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
